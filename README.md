@@ -9,6 +9,13 @@ Aqui você pode encontrar uma descrição bem mais detalhada sobre o projeto e a
 [Abrir instruções no Notion](https://abnerjs.notion.site/react-sec-2025?pvs=4)
 
 
+
+
+## 💻 Figma
+
+Aqui você pode encontrar informações sobre o protótipo e o guia de estilos.
+[Abrir protótipo no Figma](https://linky.design/react2024)
+
 ## 🚀 Instruções
 
 Inb4: Favorite este repositório 😃
