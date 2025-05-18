@@ -1,19 +1,29 @@
+import { off } from 'process'
 import { db } from '../db'
 import { attendee, checkIn } from '../db/schema'
-import { eq, desc, and, ilike } from 'drizzle-orm'
+import { eq, and, ilike, count } from 'drizzle-orm'
 
-export function getEventAttendees(
+export async function getEventAttendees(
   eventId: string,
-  page?: number,
+  page: number,
   query?: string
 ) {
   const pageSize = 10
-  page = page ? page : 1
   const searchQuery = query ? `%${query.toLowerCase()}%` : undefined
   const offset = (page - 1) * pageSize
   const limit = pageSize
 
-  return db
+  const totalAttendees = await db
+    .select({
+      total: count(attendee.id).as('total'),
+    })
+    .from(attendee)
+    .where(searchQuery ? ilike(attendee.name, searchQuery) : undefined)
+    .then((rows) => rows as { total: number }[])
+
+  const total = totalAttendees[0]?.total ?? 0
+
+  const result = await db
     .select({
       id: attendee.id,
       name: attendee.name,
@@ -29,7 +39,9 @@ export function getEventAttendees(
         searchQuery ? ilike(attendee.name, searchQuery) : undefined
       )
     )
-    .orderBy(desc(attendee.createdAt))
+    .orderBy(attendee.createdAt)
     .limit(limit)
     .offset(offset)
+
+  return { result, total }
 }

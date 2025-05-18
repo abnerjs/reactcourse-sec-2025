@@ -12,19 +12,24 @@ export const getEventAttendeesRoute: FastifyPluginAsyncZod = async (app) => {
         }),
         querystring: z.object({
           query: z.string().nullish(),
-          pageIndex: z.coerce.number().optional(),
+          page: z.coerce.number().optional(),
         }),
       },
     },
     async (request, reply) => {
       const { eventId } = request.params as { eventId: string }
-      const { pageIndex, query } = request.query as {
-        pageIndex?: number
+      const { page, query } = request.query as {
+        page?: number
         query?: string
       }
-      const pageNumber = pageIndex ? pageIndex : 1
 
-      const attendees = await getEventAttendees(eventId, pageNumber, query)
+      const pageNumber = page ? page : 1
+
+      const { result: attendees, total: total } = await getEventAttendees(
+        eventId,
+        pageNumber,
+        query
+      )
 
       if (!attendees) {
         return reply.status(404).send({
@@ -33,14 +38,22 @@ export const getEventAttendeesRoute: FastifyPluginAsyncZod = async (app) => {
       }
 
       return reply.status(200).send({
-        attendees: attendees.map((attendee) => ({
-          id: attendee.id,
-          name: attendee.name,
-          email: attendee.email,
-          createdAt: attendee.createdAt,
-          checkIn: attendee.checkIn,
-        })),
-        total: attendees.length,
+        attendees: (await attendees).map(
+          (attendee: {
+            id: any
+            name: any
+            email: any
+            createdAt: any
+            checkIn: any
+          }) => ({
+            id: attendee.id,
+            name: attendee.name,
+            email: attendee.email,
+            createdAt: attendee.createdAt,
+            checkIn: attendee.checkIn,
+          })
+        ),
+        total: total,
       })
     }
   )
