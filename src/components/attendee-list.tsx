@@ -47,13 +47,14 @@ const AttendeeList = () => {
 
   useEffect(() => {
     const url = new URL(
-      'http://localhost:3000/v4kd1l3vg7kvij2r612fwnp7/attendees'
+      'http://localhost:3000/iuhvs3mewrlcmqcv1whg890n/attendees'
     )
 
-    url.searchParams.set('pageIndex', String(page - 1))
     if (search.length > 1) {
       url.searchParams.set('query', search)
     }
+
+    url.searchParams.set('page', String(page))
 
     fetch(url)
       .then((response) => response.json())
@@ -101,7 +102,7 @@ const AttendeeList = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 flex-1">
       <div className="flex gap-3 items-center">
         <h1 className="text-2xl font-bold">Participantes</h1>
         <div className="px-3 w-72 py-1.5 border border-white/10 rounded-lg flex items-center gap-3">
