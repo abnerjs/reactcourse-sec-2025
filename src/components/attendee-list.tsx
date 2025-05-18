@@ -18,7 +18,7 @@ interface Attendee {
   name: string
   email: string
   createdAt: string
-  checkedInAt: string | null
+  checkIn: string | null
 }
 
 const AttendeeList = () => {
@@ -47,8 +47,7 @@ const AttendeeList = () => {
 
   useEffect(() => {
     const url = new URL(
-      // Substitua pelo URL correto do seu backend
-      'http://localhost:3333/events/attendees'
+      'http://localhost:3000/v4kd1l3vg7kvij2r612fwnp7/attendees'
     )
 
     url.searchParams.set('pageIndex', String(page - 1))
@@ -137,10 +136,7 @@ const AttendeeList = () => {
             return (
               <TableRow key={ateendee.id}>
                 <TableCell>
-                  <input
-                    type="checkbox"
-                    className="size-4 bg-black/20 rounded border border-white/10"
-                  />
+                  <CheckboxComponent />
                 </TableCell>
                 <TableCell>{ateendee.id}</TableCell>
                 <TableCell>
@@ -153,10 +149,10 @@ const AttendeeList = () => {
                 </TableCell>
                 <TableCell>{dayjs().to(ateendee.createdAt)}</TableCell>
                 <TableCell>
-                  {ateendee.checkedInAt === null ? (
+                  {ateendee.checkIn === null ? (
                     <span className="text-zinc-400">Não fez check-in</span>
                   ) : (
-                    dayjs().to(ateendee.checkedInAt)
+                    dayjs().to(ateendee.checkIn)
                   )}
                 </TableCell>
                 <TableCell>
