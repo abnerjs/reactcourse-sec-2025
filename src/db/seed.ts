@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { client, db } from '.'
+import { faker } from '@faker-js/faker'
 import { attendee, checkIn, event } from './schema'
 
 async function seed() {
@@ -38,6 +39,19 @@ async function seed() {
     ])
     .returning()
 
+  var attendeesToInsert = []
+  for (let i = 0; i < 120; i++) {
+    attendeesToInsert.push({
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      eventId: eventResult[0].id,
+      createdAt: faker.date.recent({
+        days: 30,
+        refDate: dayjs().subtract(8, 'days').toDate(),
+      }),
+    })
+  }
+
   const attendeeResult = await db
     .insert(attendee)
     .values([
@@ -71,6 +85,7 @@ async function seed() {
         eventId: eventResult[0].id,
         createdAt: dayjs('2025-05-16T00:00:00Z').toDate(),
       },
+      ...attendeesToInsert,
     ])
     .returning()
 

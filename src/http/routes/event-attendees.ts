@@ -11,16 +11,20 @@ export const getEventAttendeesRoute: FastifyPluginAsyncZod = async (app) => {
           eventId: z.string(),
         }),
         querystring: z.object({
-          page: z.coerce.number().optional(),
+          query: z.string().nullish(),
+          pageIndex: z.coerce.number().optional(),
         }),
       },
     },
     async (request, reply) => {
       const { eventId } = request.params as { eventId: string }
-      const { page } = request.query as { page?: number }
-      const pageNumber = page ? page : 1
+      const { pageIndex, query } = request.query as {
+        pageIndex?: number
+        query?: string
+      }
+      const pageNumber = pageIndex ? pageIndex : 1
 
-      const attendees = await getEventAttendees(eventId, pageNumber)
+      const attendees = await getEventAttendees(eventId, pageNumber, query)
 
       if (!attendees) {
         return reply.status(404).send({
