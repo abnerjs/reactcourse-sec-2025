@@ -12,6 +12,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
     "dayjs": "^1.11.13",
+    "dprint": "^0.49.1",
+    "radix-ui": "^1.4.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.3.0",
