@@ -2,7 +2,11 @@ import { db } from '../db'
 import { attendee, checkIn } from '../db/schema'
 import { eq, desc } from 'drizzle-orm'
 
-export function getEventAttendees(eventId: string) {
+export function getEventAttendees(eventId: string, page: number) {
+  const pageSize = 10
+  const offset = (page - 1) * pageSize
+  const limit = pageSize
+
   return db
     .select({
       id: attendee.id,
@@ -15,4 +19,6 @@ export function getEventAttendees(eventId: string) {
     .leftJoin(checkIn, eq(checkIn.attendeeId, attendee.id))
     .where(eq(attendee.eventId, eventId))
     .orderBy(desc(attendee.createdAt))
+    .limit(limit)
+    .offset(offset)
 }
