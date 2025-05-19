@@ -1,4 +1,4 @@
-import ifspIcon from '@assets/ifsp-icon.svg'
+import ifspIcon from '../assets/ifsp-icon.svg'
 import NavLink from './nav-link'
 
 const Header = () => {
