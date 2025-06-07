@@ -1,36 +1,28 @@
 {
-  "name": "web",
+  "name": "reactcourse-sec-2025",
+  "version": "1.0.0",
+  "description": "Sistema de Gerenciamento de Eventos.",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev:app": "npm run dev --workspace=app",
+    "build:app": "npm run build --workspace=app",
+    "dev:server": "npm run dev --workspace=server",
+    "build:server": "npm run build --workspace=server",
+    "dev": "npm run dev:server & npm run dev:app"
   },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.7",
-    "dayjs": "^1.11.13",
-    "dprint": "^0.49.1",
-    "radix-ui": "^1.4.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwind-merge": "^3.3.0",
-    "tailwindcss": "^4.1.7"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abnerjs/reactcourse-sec-2025.git"
   },
-  "devDependencies": {
-    "@eslint/js": "^9.25.0",
-    "@iconify/react": "^6.0.0",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "@vitejs/plugin-react": "^4.4.1",
-    "eslint": "^9.25.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
-  }
+  "workspaces": [
+    "app",
+    "server"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abnerjs/reactcourse-sec-2025/issues"
+  },
+  "homepage": "https://github.com/abnerjs/reactcourse-sec-2025#readme"
 }
